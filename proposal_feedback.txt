@@ -1,0 +1,18 @@
++ 0.5 pts
+Overall a great proposal. I would like to clarify a few misunderstandings though.
+
+Ablation: Reducing the number of classes of the data is not an ablation study. 
+Ablation study is about the AI system (i.e. model, pipeline, training process etc.). 
+A rule of thumb is that it should be able to tell you whether a proposed step (e.g. 
+add more layers, use a special activation) is useful or unnecessary. It doesn't 
+always mean "removing" literally but sometimes can be *replacing* with some simpler 
+components. -0.5 as technically this proposal does not have such discussion. 
+For this paper, you can try to implement some of the baselines - those without 
+"grouping" is essentially a reduced version of the proposed method. You could also 
+try different base neural network - in that case, it is not "removing" a component, 
+but replacing it.
+
+There seems to be misunderstanding in how you phrase the main task as well. The paper 
+does not try to solve the "lack" of certainty. It tries to provide such 
+uncertainty/certainty information. If you must, you could say it tries to solve 
+the lack of the "conveyance" of certainty.
