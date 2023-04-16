@@ -3,3 +3,15 @@ with the dataset here: https://berkeley.box.com/shared/static/pouthcomrvxw9hj64o
 
 I pulled out the argparse lines in the example.py & was able to replicate the study with the dataset above. 
 We should throw our model at this and see how it does for an experiment.  
+
+Dataset path should be inserted like this
+    imagenet_val 
+         |
+         |
+         ----val
+              |
+              |
+              -----class_folder_names
+                      |
+                      |
+                      -------images
