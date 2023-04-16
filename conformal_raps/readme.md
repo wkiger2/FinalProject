@@ -5,13 +5,4 @@ I pulled out the argparse lines in the example.py & was able to replicate the st
 We should throw our model at this and see how it does for an experiment.  
 
 Dataset path should be inserted like this
-    imagenet_val 
-         |
-         |
-         ----val
-              |
-              |
-              -----class_folder_names
-                      |
-                      |
-                      -------images
+    imagenet_val\val\(class_folder_names)\(images)
