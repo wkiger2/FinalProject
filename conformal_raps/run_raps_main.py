@@ -36,7 +36,7 @@ if __name__ == "__main__":
     ])
 
     # Get the conformal calibration dataset
-    root = r'C:\Users\WilliamKiger\Desktop\TESTMYDATA\validation_dataset' 
+    root = r'../data/validation_dataset' 
     validate_path = os.path.join(root, 'val')
 
     ##################################################################
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     # Check for device type and load the model
     ##################################################################
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    model_path = r"C:/Users/WilliamKiger/Desktop/FinalProject-main/FinalProject-main/resnet_18_derm_model_test_v2.pt"
+    model_path = r"../model/resnet_18_derm_model_test_v2.pt"
     model = torch.load(model_path)
     # model.to(device)
 

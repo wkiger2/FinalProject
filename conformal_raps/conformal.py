@@ -7,7 +7,11 @@ import torch.utils.data as tdata
 import pandas as pd
 import time
 from tqdm import tqdm
-from conformal_raps.utils import validate, get_logits_targets, sort_sum
+
+try: 
+    from utils import validate, get_logits_targets, sort_sum
+except: 
+    from conformal_raps.utils import validate, get_logits_targets, sort_sum
 # import pdb
 
 ##############################################################################
