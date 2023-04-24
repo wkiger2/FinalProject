@@ -300,3 +300,46 @@ def get_violation(cmodel, loader_paramtune, strata, alpha):
         wc_violation = max(wc_violation, stratum_violation)
     return wc_violation # the violation
 
+class AdaptiveConformalModel:
+    def __init__(self, model, calib_loader, target_avg_size):
+        self.model = model
+        self.calib_loader = calib_loader
+        self.target_avg_size = target_avg_size
+        self.alpha = 0.1
+        self.calibrate()
+
+    def calibrate(self):
+        total_size = 0
+        n_items = 0
+
+        for data, target in self.calib_loader:
+            data = data.cuda()
+            target = target.cuda()
+            batch_size = data.size(0)
+
+            scores = self.model(data).detach()
+            for i in range(batch_size):
+                size, _ = self.compute_prediction_set(scores[i], self.alpha)
+                total_size += size
+                n_items += 1
+
+        current_avg_size = total_size / n_items
+        self.alpha = self.alpha * self.target_avg_size / current_avg_size
+
+    def compute_prediction_set(self, scores, alpha):
+        sorted_indices = scores.argsort(descending=True)
+        sorted_scores = scores[sorted_indices]
+
+        cum_sum = torch.cumsum(sorted_scores, dim=0)
+        p_values = 1 - cum_sum / cum_sum[-1]
+
+        prediction_set = sorted_indices[p_values <= alpha].tolist()
+        return len(prediction_set), prediction_set
+
+    def __call__(self, data):
+        data = data.cuda()
+        scores = self.model(data).detach()
+
+        size, prediction_set = self.compute_prediction_set(scores[0], self.alpha)
+        return scores, prediction_set
+
