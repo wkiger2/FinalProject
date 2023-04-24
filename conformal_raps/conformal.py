@@ -7,22 +7,32 @@ import torch.utils.data as tdata
 import pandas as pd
 import time
 from tqdm import tqdm
-from utils import validate, get_logits_targets, sort_sum
-import pdb
+from conformal_raps.utils import validate, get_logits_targets, sort_sum
+# import pdb
+
+##############################################################################
+#William Kiger
+#This is the main logic of the RAPS conformal prediction algorith
+#I did some modifications to the Conformal model to parameterize 
+#variables that are dependant on the data (calabration set)
+##############################################################################
+
 
 # Conformalize a model with a calibration set.
-# Save it to a file in .cache/modelname
 # The only difference is that the forward method of ConformalModel also outputs a set.
 class ConformalModel(nn.Module):
     def __init__(self, model, calib_loader, alpha, kreg=None, lamda=None, randomized=True, allow_zero_sets=False, pct_paramtune = 0.3, batch_size=32, lamda_criterion='size'):
         super(ConformalModel, self).__init__()
+        #wdk...modified this class to parameterized the number of classes
         self.model = model 
         self.alpha = alpha
         self.T = torch.Tensor([1.3]) #initialize (1.3 is usually a good value)
-        self.T, calib_logits = platt(self, calib_loader)
+        self.num_classes = len(calib_loader.dataset.dataset.classes) #wdk..try to abstract this...
+        self.T, calib_logits = platt(self, calib_loader, self.num_classes)
+        # self.T, calib_logits = platt(self, calib_loader)  #wdk...modify to parameterize the number of classes for the RAPS implementation
         self.randomized=randomized
         self.allow_zero_sets=allow_zero_sets
-        self.num_classes = len(calib_loader.dataset.dataset.classes)
+        # self.num_classes = len(calib_loader.dataset.dataset.classes) #wdk... calculeted this further up to parameterize this class member attribute
 
         if kreg == None or lamda == None:
             kreg, lamda, calib_logits = pick_parameters(model, calib_logits, alpha, kreg, lamda, randomized, allow_zero_sets, pct_paramtune, batch_size, lamda_criterion)
@@ -69,10 +79,11 @@ def conformal_calibration(cmodel, calib_loader):
         return Qhat 
 
 # Temperature scaling
-def platt(cmodel, calib_loader, max_iters=10, lr=0.01, epsilon=0.01):
+def platt(cmodel, calib_loader, num_classes, max_iters=10, lr=0.01, epsilon=0.01):
     print("Begin Platt scaling.")
     # Save logits so don't need to double compute them
-    logits_dataset = get_logits_targets(cmodel.model, calib_loader)
+    # logits_dataset = get_logits_targets(cmodel.model, calib_loader)
+    logits_dataset = get_logits_targets(cmodel.model, calib_loader, num_classes)
     logits_loader = torch.utils.data.DataLoader(logits_dataset, batch_size = calib_loader.batch_size, shuffle=False, pin_memory=True)
 
     T = platt_logits(cmodel, logits_loader, max_iters=max_iters, lr=lr, epsilon=epsilon)
@@ -80,13 +91,11 @@ def platt(cmodel, calib_loader, max_iters=10, lr=0.01, epsilon=0.01):
     print(f"Optimal T={T.item()}")
     return T, logits_dataset 
 
-"""
 
 
-        INTERNAL FUNCTIONS
-
-
-"""
+###############################################################################
+# these are the internal functionas
+###############################################################################
 
 ### Precomputed-logit versions of the above functions.
 
