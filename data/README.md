@@ -3,11 +3,4 @@ from the following google drive accounts.
 
 The scraped dataset can be found here: 
 
-https://drive.google.com/file/d/1sA7VaxLJvaVGRvvvDJz_BVCTpoq49pRh/view?usp=sharing  
-
-
-The same dataset with the train and validation split can be found here:
-
-
-https://drive.google.com/file/d/16ZP87EgqD9RgDB2SaKyb_k-b0FU2ctV3/view?usp=sharing
-
+https://drive.google.com/drive/folders/1yC46cY7UR49-FMBja1Z_AEohmLnXuEWj?usp=sharing
