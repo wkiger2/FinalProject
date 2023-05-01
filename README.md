@@ -1,5 +1,5 @@
-# FinalProject William Kiger (wkiger2@illinois.edu) and Kristopher Gallagher (kmg8@illinois.edu)
 # CS 598 Deep Learning for Healthcare - Spring Semester 2023
+FinalProject William Kiger (wkiger2@illinois.edu) and Kristopher Gallagher (kmg8@illinois.edu)
 
 # A Second Look at "Fair Conformal Predictors for Applications in Medical Imaging" 
 # From: https://arxiv.org/pdf/2109.04392v3.pdf
