@@ -8,4 +8,4 @@ Steps to run our programs:
 2) Unzip the model and place it in the directory named "model"
 3) Unzip the datasets and place them in the directory named "data"
 4) Create conda environment
-...
+...TODO
