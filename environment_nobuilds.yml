@@ -1,0 +1,15 @@
+name: conformal
+channels:
+  - defaults
+dependencies:
+  - torchvision
+  - pytorch
+  - pytorch-cuda=11.7
+  - torchaudio
+  - jupyter
+  - seaborn
+  - scipy
+  - tqdm
+  - spyder
+  - scikit-learn
+prefix: C:\Users\WilliamKiger\Anaconda3\envs\conformal
