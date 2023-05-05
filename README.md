@@ -13,4 +13,4 @@ Steps to run our programs:
  Please ensure your paths look like this before running our programs. <br /> 
 
 4) Create conda environment <br /> 
--There are 2 .yml files included in the repo to reproduce our conda environments, environment_nobuilds.yml which is less system dependant.  The complete .yml file with the build information is named environment.yml
+There are 2 .yml files included in the repo to reproduce our conda environments, environment_nobuilds.yml which is less system dependant.  The complete .yml file with the build information is named environment.yml
